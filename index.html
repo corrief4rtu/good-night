@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop All the Bubbles</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #E6E6FA; /* Lavender background */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            padding-top: 60px; /* Padding to ensure bubbles don't go behind the title */
+        }
+        h1 {
+            color: white;
+            text-shadow: 2px 2px 4px #000000;
+            position: absolute;
+            top: 10px;
+            z-index: 1000;
+        }
+        #bubble-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .bubble {
+            position: absolute;
+            bottom: -50px; /* Start just below the bottom of the screen */
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: float 10s infinite ease-in-out;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-110vh); /* Move up beyond the top of the screen */
+            }
+        }
+        #message {
+            display: none;
+            color: white;
+            font-size: 2em;
+            text-shadow: 2px 2px 4px #000000;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <h1>Pop All the Bubbles</h1>
+    <div id="bubble-container"></div>
+    <div id="message">Спокойной ночи, Ариша💜!</div>
+    <script>
+        const bubbleContainer = document.getElementById('bubble-container');
+        const message = document.getElementById('message');
+        let bubblesPopped = 0;
+        const totalBubbles = 15;
+
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            // Randomize the left position to be between 20% and 80% of the viewport width
+            bubble.style.left = (Math.random() * 60 + 20) + 'vw';
+            bubble.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            bubble.addEventListener('click', () => {
+                bubble.remove();
+                bubblesPopped++;
+                if (bubblesPopped === totalBubbles) {
+                    message.style.display = 'block';
+                }
+            });
+            bubbleContainer.appendChild(bubble);
+        }
+
+        for (let i = 0; i < totalBubbles; i++) {
+            createBubble();
+        }
+    </script>
+</body>
+</html>
